@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CANNABIS. — Barcelona</title>
+<meta name="description" content="An independent smoke shop in El Raval, Barcelona. Vapes, tools, papers, and souvenirs. 18+ only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B0F24;
+    --ink-2:#120A19;
+    --paper:#FFF6E9;
+    --paper-dim: rgba(255,246,233,0.72);
+    --pink:#FF2E88;
+    --lime:#D4FF3D;
+    --orange:#FF7A29;
+    --violet:#9B4DFF;
+    --teal:#00D9C0;
+    --line: rgba(255,246,233,0.16);
+    --radius: 18px;
+    --font-display: 'Bungee', system-ui, sans-serif;
+    --font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --shadow-hard: 6px 6px 0 rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  button{ font-family: inherit; cursor:pointer; }
+
+  *:focus-visible{
+    outline: 3px solid var(--lime);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===================== AGE GATE ===================== */
+  #age-gate{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--ink-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  #age-gate.hidden{ display:none; }
+  body.gate-open{ overflow: hidden; }
+
+  .gate-card{
+    max-width: 460px;
+    width: 100%;
+    background: var(--ink);
+    border: 3px solid var(--paper);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    text-align: center;
+    box-shadow: var(--shadow-hard);
+  }
+  .gate-card .gate-leaf{ margin: 0 auto 18px; width: 56px; height: 56px; color: var(--lime); }
+  .gate-card h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    margin: 0 0 14px;
+    line-height: 1.15;
+    color: var(--pink);
+  }
+  .gate-card p{ color: var(--paper-dim); margin: 0 0 28px; font-size: 0.98rem; }
+  .gate-buttons{ display:flex; flex-direction: column; gap: 12px; }
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    border: 3px solid var(--paper);
+    background: transparent;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration:none;
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn-solid{ background: var(--pink); border-color: var(--pink); color: var(--ink); }
+  .btn-solid:hover{ background: var(--paper); border-color: var(--paper); }
+  .btn-ghost{ background: transparent; }
+  .btn-ghost:hover{ background: var(--paper); color: var(--ink); }
+  .gate-fine{ margin-top: 22px; font-size: 0.75rem; color: var(--paper-dim); }
+  .gate-no{
+    background: none; border: none; color: var(--paper-dim);
+    text-decoration: underline; font-size: 0.85rem; margin-top: 4px;
+  }
+  .gate-bye{ display:none; }
+  .gate-bye.show{ display:block; }
+  .gate-yes-content.hide{ display:none; }
+
+  /* ===================== NAV ===================== */
+  header.site{
+    position: sticky; top:0; z-index: 60;
+    background: rgba(27,15,36,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content: space-between;
+    padding: 16px 0;
+  }
+  .logo{
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--paper);
+    text-decoration:none;
+    letter-spacing: 0.5px;
+    display:flex; flex-direction:column; line-height:1;
+  }
+  .logo span{
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--lime);
+    margin-top: 4px;
+  }
+  .nav-links{
+    display:flex; align-items:center; gap: 30px;
+    list-style:none; margin:0; padding:0;
+  }
+  .nav-links a{
+    text-decoration:none; font-weight: 600; font-size: 0.92rem;
+    color: var(--paper-dim);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover{ color: var(--lime); }
+  .nav-right{ display:flex; align-items:center; gap:16px; }
+  .cart-pill{
+    display:flex; align-items:center; gap:8px;
+    border: 2px solid var(--paper); border-radius: 999px;
+    padding: 6px 14px; font-weight: 700; font-size: 0.85rem;
+    background: transparent;
+    color: var(--paper);
+  }
+  .cart-pill svg{ width:16px; height:16px; }
+  #cart-count{ color: var(--lime); }
+  .nav-toggle{
+    display:none; background:none; border: 2px solid var(--paper); border-radius: 10px;
+    width: 40px; height:40px; color: var(--paper);
+  }
+
+  @media (max-width: 860px){
+    .nav-links{
+      position: absolute; top: 100%; left:0; right:0;
+      flex-direction: column; align-items: flex-start;
+      background: var(--ink); border-bottom: 1px solid var(--line);
+      padding: 20px 24px; gap: 18px;
+      display:none;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ===================== MARQUEE ===================== */
+  .marquee{
+    background: var(--lime);
+    color: var(--ink);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom: 1px solid var(--line);
+  }
+  .marquee-track{
+    display:inline-flex;
+    animation: scroll-left 26s linear infinite;
+    padding: 9px 0;
+  }
+  @keyframes scroll-left{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  .marquee-item{
+    font-weight: 700; font-size: 0.82rem; letter-spacing: 0.4px;
+    padding: 0 22px; display:flex; align-items:center; gap:22px;
+  }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    position: relative;
+    padding: 90px 0 120px;
+    overflow: hidden;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.3fr 0.9fr; gap: 50px; align-items:center;
+  }
+  .hero h1{
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5.4vw, 4rem);
+    line-height: 1.08;
+    margin: 0 0 22px;
+  }
+  .hero h1 .c1{ color: var(--pink); }
+  .hero h1 .c2{ color: var(--lime); }
+  .hero h1 .c3{ color: var(--orange); }
+  .hero p.lead{
+    font-size: 1.08rem; color: var(--paper-dim); max-width: 480px; margin: 0 0 34px;
+  }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap: 14px; }
+
+  .sticker-field{ position:relative; height: 380px; }
+  .sticker{
+    position:absolute;
+    border-radius: 999px;
+    border: 3px solid var(--ink);
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 0.78rem;
+    text-align:center;
+    display:flex; align-items:center; justify-content:center;
+    padding: 18px;
+    box-shadow: var(--shadow-hard);
+    transform: scale(0) rotate(0deg);
+    animation: pop-in 0.5s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sticker{ animation: none; transform: none !important; }
+  }
+  @keyframes pop-in{
+    to{ transform: scale(1) rotate(var(--rot, 0deg)); }
+  }
+  .sticker.s1{ background: var(--pink); color: var(--ink); width:150px; height:150px; top: 0; left: 30px; --rot:-9deg; animation-delay: 0.05s; }
+  .sticker.s2{ background: var(--teal); color: var(--ink); width:130px; height:130px; top: 60px; right: 10px; --rot: 7deg; animation-delay: 0.2s; }
+  .sticker.s3{ background: var(--paper); color: var(--ink); width:160px; height:160px; bottom: 30px; left: 70px; --rot:5deg; animation-delay: 0.35s; }
+  .sticker.s4{ background: var(--orange); color: var(--ink); width:110px; height:110px; bottom: 0; right: 60px; --rot:-6deg; animation-delay: 0.5s; }
+
+  /* ===================== SECTION HEADERS ===================== */
+  section{ padding: 90px 0; border-top: 1px solid var(--line); }
+  .section-head{ max-width: 620px; margin-bottom: 46px; }
+  .section-head h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    margin: 0 0 14px;
+    line-height:1.15;
+  }
+  .section-head p{ color: var(--paper-dim); margin:0; }
+
+  /* ===================== MANIFESTO ===================== */
+  .manifesto-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .manifesto-grid p{ color: var(--paper-dim); margin: 0 0 18px; font-size: 1.02rem; }
+  .manifesto-grid p:last-child{ margin-bottom:0; }
+  .badge-row{ display:flex; flex-wrap:wrap; gap: 10px; align-content: flex-start; }
+  .badge{
+    border: 2px solid var(--paper); border-radius: 999px;
+    padding: 9px 16px; font-size: 0.78rem; font-weight: 700;
+    white-space:nowrap;
+  }
+  .badge.on-lime{ background: var(--lime); color: var(--ink); border-color: var(--lime); }
+  .badge.on-pink{ background: var(--pink); color: var(--ink); border-color: var(--pink); }
+  .badge.on-violet{ background: var(--violet); color: var(--paper); border-color: var(--violet); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .sticker-field{ display:none; }
+    .manifesto-grid{ grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  /* ===================== SHOP / FILTERS ===================== */
+  .filters{
+    display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 40px;
+  }
+  .chip{
+    border: 2px solid var(--line);
+    background: transparent;
+    color: var(--paper-dim);
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .chip[aria-pressed="true"]{
+    background: var(--paper); color: var(--ink); border-color: var(--paper);
+  }
+
+  .product-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 22px;
+  }
+  .card{
+    background: var(--ink-2);
+    border: 2px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    display:flex; flex-direction:column; gap: 14px;
+    position: relative;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover{ border-color: var(--accent, var(--paper)); transform: translateY(-3px); }
+  .card .icon-wrap{
+    width: 56px; height:56px; border-radius: 14px;
+    display:flex; align-items:center; justify-content:center;
+    background: color-mix(in srgb, var(--accent, var(--pink)) 18%, transparent);
+    color: var(--accent, var(--pink));
+  }
+  .card .icon-wrap svg{ width: 30px; height: 30px; }
+  .card h3{ margin:0; font-size: 1.05rem; }
+  .card .desc{ margin:0; color: var(--paper-dim); font-size: 0.86rem; flex-grow:1; }
+  .card .card-bottom{ display:flex; align-items:center; justify-content: space-between; margin-top: 4px; }
+  .price{ font-weight: 800; font-size: 1.05rem; }
+  .add-btn{
+    border: 2px solid var(--accent, var(--paper));
+    background: transparent;
+    color: var(--paper);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+  .add-btn:hover{ background: var(--accent, var(--paper)); color: var(--ink); }
+  .tag{
+    position:absolute; top: -10px; right: 16px;
+    font-size: 0.68rem; font-weight: 800; letter-spacing: 0.4px;
+    padding: 5px 10px; border-radius: 999px;
+    background: var(--accent, var(--pink)); color: var(--ink);
+  }
+
+  /* ===================== VISIT ===================== */
+  .visit-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+  .info-list{ list-style:none; margin: 0 0 30px; padding:0; display:flex; flex-direction:column; gap: 18px; }
+  .info-list li{ display:flex; gap: 14px; }
+  .info-list .ii{ width: 26px; height:26px; color: var(--lime); flex-shrink:0; margin-top:2px; }
+  .info-list strong{ display:block; font-size: 0.95rem; }
+  .info-list span{ color: var(--paper-dim); font-size: 0.9rem; }
+  .map-frame{
+    border-radius: var(--radius); overflow:hidden; border: 2px solid var(--line);
+    aspect-ratio: 4/3;
+  }
+  .map-frame iframe{ width:100%; height:100%; border:0; filter: grayscale(0.3) contrast(1.05); }
+
+  @media (max-width: 860px){
+    .visit-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ===================== FOOTER ===================== */
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 50px 0 30px;
+    background: var(--ink-2);
+  }
+  .footer-top{ display:flex; flex-wrap:wrap; justify-content: space-between; gap: 30px; margin-bottom: 34px; }
+  .footer-brand .logo{ margin-bottom: 10px; }
+  .footer-brand p{ color: var(--paper-dim); max-width: 320px; font-size: 0.88rem; }
+  .footer-links{ display:flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col h4{ font-size: 0.78rem; letter-spacing: 0.5px; margin: 0 0 14px; color: var(--paper-dim); }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .footer-col a{ text-decoration:none; font-size: 0.9rem; color: var(--paper); }
+  .footer-col a:hover{ color: var(--lime); }
+  .legal-box{
+    border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px;
+    font-size: 0.78rem; color: var(--paper-dim); margin-bottom: 24px; line-height:1.6;
+  }
+  .legal-box strong{ color: var(--paper); }
+  .footer-bottom{
+    display:flex; flex-wrap:wrap; justify-content: space-between; gap: 10px;
+    font-size: 0.78rem; color: var(--paper-dim);
+    padding-top: 20px; border-top: 1px solid var(--line);
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip: rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+<body class="gate-open">
+
+<!-- ============ SVG ICON SPRITE ============ -->
+<svg class="sr-only" aria-hidden="true">
+  <symbol id="ic-leaf" viewBox="0 0 64 64"><path d="M12 52C10 30 24 12 50 10c2 22-10 40-38 42z" fill="none" stroke="currentColor" stroke-width="4"/><path d="M14 50C22 40 30 30 46 16" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-vape" viewBox="0 0 64 64"><rect x="22" y="8" width="20" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="4"/><rect x="18" y="22" width="28" height="34" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><line x1="26" y1="32" x2="38" y2="32" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-battery" viewBox="0 0 64 64"><rect x="14" y="18" width="28" height="36" rx="4" fill="none" stroke="currentColor" stroke-width="4"/><rect x="22" y="10" width="12" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="4"/><line x1="28" y1="28" x2="28" y2="44" stroke="currentColor" stroke-width="4"/><line x1="20" y1="36" x2="36" y2="36" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-grinder" viewBox="0 0 64 64"><circle cx="32" cy="24" r="16" fill="none" stroke="currentColor" stroke-width="4"/><rect x="24" y="40" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="26" cy="20" r="2" fill="currentColor"/><circle cx="34" cy="18" r="2" fill="currentColor"/><circle cx="30" cy="28" r="2" fill="currentColor"/><circle cx="38" cy="26" r="2" fill="currentColor"/></symbol>
+  <symbol id="ic-tray" viewBox="0 0 64 64"><rect x="8" y="20" width="48" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><path d="M16 46c4 6 28 6 32 0" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="20" cy="30" r="2" fill="currentColor"/><circle cx="30" cy="34" r="2" fill="currentColor"/><circle cx="42" cy="28" r="2" fill="currentColor"/></symbol>
+  <symbol id="ic-scale" viewBox="0 0 64 64"><rect x="10" y="38" width="44" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="4"/><rect x="22" y="20" width="20" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="4"/><line x1="32" y1="34" x2="32" y2="38" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-tin" viewBox="0 0 64 64"><rect x="14" y="18" width="36" height="34" rx="4" fill="none" stroke="currentColor" stroke-width="4"/><rect x="10" y="12" width="44" height="8" rx="3" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-papers" viewBox="0 0 64 64"><rect x="14" y="10" width="26" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="4" transform="rotate(-8 27 29)"/><rect x="22" y="16" width="26" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-filter" viewBox="0 0 64 64"><path d="M20 12c14 0 24 18 24 40" fill="none" stroke="currentColor" stroke-width="4"/><path d="M20 12l14 0" fill="none" stroke="currentColor" stroke-width="4"/><path d="M20 20l10 0" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-wick" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="4"/><path d="M22 32c4-8 16-8 20 0" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-lighter" viewBox="0 0 64 64"><rect x="22" y="24" width="20" height="30" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><path d="M28 24c0-8 8-8 8-16-6 2-10 8-8 16z" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-tee" viewBox="0 0 64 64"><path d="M20 14l-12 8 6 8 6-3v27h24V27l6 3 6-8-12-8-4 4h-16z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-tote" viewBox="0 0 64 64"><rect x="12" y="22" width="40" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="4"/><path d="M22 22v-4a10 10 0 0 1 20 0v4" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 64 64"><path d="M32 8l6 16 17 2-13 12 4 17-14-9-14 9 4-17-13-12 17-2z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-cap" viewBox="0 0 64 64"><path d="M10 38c0-12 10-20 22-20s22 8 22 20" fill="none" stroke="currentColor" stroke-width="4"/><path d="M8 38h48" stroke="currentColor" stroke-width="4"/><path d="M40 38c6 0 14 2 16 6-6 2-12 2-16-1z" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-jar" viewBox="0 0 64 64"><rect x="16" y="20" width="32" height="30" rx="6" fill="none" stroke="currentColor" stroke-width="4"/><rect x="20" y="12" width="24" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-tea" viewBox="0 0 64 64"><path d="M12 26h32v14a16 16 0 0 1-32 0z" fill="none" stroke="currentColor" stroke-width="4"/><path d="M44 30c8-2 12 10 2 12" fill="none" stroke="currentColor" stroke-width="4"/><path d="M20 18c2-4-2-4 0-8M30 18c2-4-2-4 0-8" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-drop" viewBox="0 0 64 64"><path d="M32 10c8 12 16 22 16 32a16 16 0 0 1-32 0c0-10 8-20 16-32z" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-pin" viewBox="0 0 64 64"><path d="M32 58S14 38 14 24a18 18 0 0 1 36 0c0 14-18 34-18 34z" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="32" cy="24" r="6" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="4"/><path d="M32 20v12l9 6" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
+  <symbol id="ic-ig" viewBox="0 0 64 64"><rect x="10" y="10" width="44" height="44" rx="12" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="32" cy="32" r="11" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="45" cy="19" r="2.5" fill="currentColor"/></symbol>
+  <symbol id="ic-cart" viewBox="0 0 64 64"><path d="M8 12h8l6 30h28l6-20H20" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><circle cx="26" cy="52" r="4" fill="currentColor"/><circle cx="44" cy="52" r="4" fill="currentColor"/></symbol>
+  <symbol id="ic-menu" viewBox="0 0 64 64"><line x1="10" y1="18" x2="54" y2="18" stroke="currentColor" stroke-width="5"/><line x1="10" y1="32" x2="54" y2="32" stroke="currentColor" stroke-width="5"/><line x1="10" y1="46" x2="54" y2="46" stroke="currentColor" stroke-width="5"/></symbol>
+</svg>
+
+<!-- ============ AGE GATE ============ -->
+<div id="age-gate">
+  <div class="gate-card">
+    <div class="gate-yes-content">
+      <svg class="gate-leaf" aria-hidden="true"><use href="#ic-leaf"/></svg>
+      <h2>HOLD UP.</h2>
+      <p>This site — and our actual shop — is for adults only. You need to be <strong>18 or older</strong> to come in, browse, or buy anything.</p>
+      <div class="gate-buttons">
+        <button class="btn btn-solid" id="gate-yes">I'm 18+, let me in</button>
+        <button class="gate-no" id="gate-no">I'm younger than 18</button>
+      </div>
+      <p class="gate-fine">By entering you confirm you meet the legal age in your country. ID is checked at the till, every time, no exceptions.</p>
+    </div>
+    <div class="gate-bye">
+      <svg class="gate-leaf" aria-hidden="true"><use href="#ic-leaf"/></svg>
+      <h2>ALL GOOD.</h2>
+      <p>Come back and see us when you're older — the grinders and stickers aren't going anywhere. Thanks for being honest with us.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="wrap nav">
+    <a href="#top" class="logo">CANNABIS.<span>BARCELONA · EST. LOCAL</span></a>
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#manifesto">Manifesto</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a href="#" aria-label="Instagram">Instagram</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <button class="cart-pill" aria-live="polite">
+        <svg aria-hidden="true"><use href="#ic-cart"/></svg>
+        <span id="cart-count">0</span>
+      </button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+        <svg aria-hidden="true"><use href="#ic-menu"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee-track">
+      <!-- filled by JS for seamless loop -->
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>WE DIDN'T HIRE A <span class="c1">BRANDING</span> <span class="c2">AGENCY.</span></h1>
+        <p class="lead">We just called it what it is. Vapes, grinders, papers, and Barcelona souvenirs — picked by people who actually use this stuff, not a marketing team. <span class="c3" style="font-weight:700;">18+ only</span>, always independent.</p>
+        <div class="hero-ctas">
+          <a href="#shop" class="btn btn-solid">Browse the shop</a>
+          <a href="#visit" class="btn btn-ghost">Find us in Raval</a>
+        </div>
+      </div>
+      <div class="sticker-field" aria-hidden="true">
+        <div class="sticker s1">NOT<br>A FRANCHISE</div>
+        <div class="sticker s2">18+<br>ONLY</div>
+        <div class="sticker s3">INDEPENDENT<br>SINCE DAY ONE</div>
+        <div class="sticker s4">MADE IN<br>EL RAVAL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MANIFESTO ============ -->
+  <section id="manifesto">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The short version</h2>
+      </div>
+      <div class="manifesto-grid">
+        <div>
+          <p>We're three people from the neighbourhood who got tired of shiny "lifestyle concept stores" charging €40 for a grinder and calling it curated. So we opened our own spot, painted it ourselves, and stocked it with things we'd actually buy.</p>
+          <p>No loyalty app. No corporate head office three countries away. No one's getting a bonus off your basket size. Just a shop, run by the people who work in it, in a city that's been doing its own thing for a very long time.</p>
+        </div>
+        <div class="badge-row">
+          <span class="badge on-lime">Independent, always</span>
+          <span class="badge on-pink">18+ only</span>
+          <span class="badge on-violet">Cash & card, no crypto gimmicks</span>
+          <span class="badge">Locally owned, locally weird</span>
+          <span class="badge">Free sticker with every order</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOP ============ -->
+  <section id="shop">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The goods</h2>
+        <p>A sample of what's on the shelves. Everything here is legal to sell and buy as an adult in Spain — what you get up to after that is on you.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter products by category">
+        <button class="chip" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" data-filter="vapes" aria-pressed="false">Vapes & devices</button>
+        <button class="chip" data-filter="tools" aria-pressed="false">Tools</button>
+        <button class="chip" data-filter="basics" aria-pressed="false">Papers & basics</button>
+        <button class="chip" data-filter="merch" aria-pressed="false">Merch & souvenirs</button>
+        <button class="chip" data-filter="cbd" aria-pressed="false">CBD & wellness</button>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <!-- VAPES -->
+        <article class="card" data-cat="vapes" style="--accent: var(--pink);">
+          <span class="tag" style="--accent: var(--pink);">Bestseller</span>
+          <div class="icon-wrap"><svg><use href="#ic-vape"/></svg></div>
+          <h3>The Pocket One</h3>
+          <p class="desc">Compact dry-herb vaporizer, USB-C, fits in a coin pocket.</p>
+          <div class="card-bottom"><span class="price">€39</span><button class="add-btn" data-name="The Pocket One" data-price="39">Add</button></div>
+        </article>
+        <article class="card" data-cat="vapes" style="--accent: var(--pink);">
+          <div class="icon-wrap"><svg><use href="#ic-vape"/></svg></div>
+          <h3>Cloud Nine Mini</h3>
+          <p class="desc">Ceramic-coil vape pen with three heat settings.</p>
+          <div class="card-bottom"><span class="price">€29</span><button class="add-btn" data-name="Cloud Nine Mini" data-price="29">Add</button></div>
+        </article>
+        <article class="card" data-cat="vapes" style="--accent: var(--pink);">
+          <div class="icon-wrap"><svg><use href="#ic-battery"/></svg></div>
+          <h3>The Session Starter</h3>
+          <p class="desc">Battery + USB-C dock kit for 510-thread cartridges.</p>
+          <div class="card-bottom"><span class="price">€19</span><button class="add-btn" data-name="The Session Starter" data-price="19">Add</button></div>
+        </article>
+        <article class="card" data-cat="vapes" style="--accent: var(--pink);">
+          <span class="tag" style="--accent: var(--pink);">New</span>
+          <div class="icon-wrap"><svg><use href="#ic-battery"/></svg></div>
+          <h3>Glow Stick 510</h3>
+          <p class="desc">Variable-voltage battery, glows in the colour you pick.</p>
+          <div class="card-bottom"><span class="price">€15</span><button class="add-btn" data-name="Glow Stick 510" data-price="15">Add</button></div>
+        </article>
+
+        <!-- TOOLS -->
+        <article class="card" data-cat="tools" style="--accent: var(--lime);">
+          <span class="tag" style="--accent: var(--lime);">Bestseller</span>
+          <div class="icon-wrap"><svg><use href="#ic-grinder"/></svg></div>
+          <h3>Raval Grinder</h3>
+          <p class="desc">4-piece aluminium grinder with a pollen catcher.</p>
+          <div class="card-bottom"><span class="price">€14</span><button class="add-btn" data-name="Raval Grinder" data-price="14">Add</button></div>
+        </article>
+        <article class="card" data-cat="tools" style="--accent: var(--lime);">
+          <div class="icon-wrap"><svg><use href="#ic-tray"/></svg></div>
+          <h3>Trencadís Tray</h3>
+          <p class="desc">Rolling tray printed with a broken-mosaic pattern.</p>
+          <div class="card-bottom"><span class="price">€12</span><button class="add-btn" data-name="Trencadís Tray" data-price="12">Add</button></div>
+        </article>
+        <article class="card" data-cat="tools" style="--accent: var(--lime);">
+          <div class="icon-wrap"><svg><use href="#ic-scale"/></svg></div>
+          <h3>Pocket Scale 0.01</h3>
+          <p class="desc">Digital mini scale, folds flat, takes two AAA batteries.</p>
+          <div class="card-bottom"><span class="price">€9</span><button class="add-btn" data-name="Pocket Scale 0.01" data-price="9">Add</button></div>
+        </article>
+        <article class="card" data-cat="tools" style="--accent: var(--lime);">
+          <div class="icon-wrap"><svg><use href="#ic-tin"/></svg></div>
+          <h3>Stash Tin</h3>
+          <p class="desc">Smell-proof tin with a silicone seal, five colours.</p>
+          <div class="card-bottom"><span class="price">€8</span><button class="add-btn" data-name="Stash Tin" data-price="8">Add</button></div>
+        </article>
+
+        <!-- BASICS -->
+        <article class="card" data-cat="basics" style="--accent: var(--orange);">
+          <div class="icon-wrap"><svg><use href="#ic-papers"/></svg></div>
+          <h3>Rice Paper Pack</h3>
+          <p class="desc">Unbleached, slow-burning, 32 leaves per pack.</p>
+          <div class="card-bottom"><span class="price">€2</span><button class="add-btn" data-name="Rice Paper Pack" data-price="2">Add</button></div>
+        </article>
+        <article class="card" data-cat="basics" style="--accent: var(--orange);">
+          <div class="icon-wrap"><svg><use href="#ic-filter"/></svg></div>
+          <h3>Unbleached Filter Tips</h3>
+          <p class="desc">Pack of 50, perforated card, easy to fold.</p>
+          <div class="card-bottom"><span class="price">€2.50</span><button class="add-btn" data-name="Unbleached Filter Tips" data-price="2.5">Add</button></div>
+        </article>
+        <article class="card" data-cat="basics" style="--accent: var(--orange);">
+          <div class="icon-wrap"><svg><use href="#ic-wick"/></svg></div>
+          <h3>Hemp Wick Roll</h3>
+          <p class="desc">3 metres of beeswax-coated hemp wick on a spool.</p>
+          <div class="card-bottom"><span class="price">€4</span><button class="add-btn" data-name="Hemp Wick Roll" data-price="4">Add</button></div>
+        </article>
+        <article class="card" data-cat="basics" style="--accent: var(--orange);">
+          <div class="icon-wrap"><svg><use href="#ic-lighter"/></svg></div>
+          <h3>Flame On Lighter</h3>
+          <p class="desc">Refillable lighter, assorted colours, pick a mood.</p>
+          <div class="card-bottom"><span class="price">€3</span><button class="add-btn" data-name="Flame On Lighter" data-price="3">Add</button></div>
+        </article>
+
+        <!-- MERCH -->
+        <article class="card" data-cat="merch" style="--accent: var(--violet);">
+          <span class="tag" style="--accent: var(--violet);">Bestseller</span>
+          <div class="icon-wrap"><svg><use href="#ic-tee"/></svg></div>
+          <h3>"Not a Franchise" Tee</h3>
+          <p class="desc">Organic cotton, printed and stocked locally.</p>
+          <div class="card-bottom"><span class="price">€22</span><button class="add-btn" data-name="Not a Franchise Tee" data-price="22">Add</button></div>
+        </article>
+        <article class="card" data-cat="merch" style="--accent: var(--violet);">
+          <div class="icon-wrap"><svg><use href="#ic-tote"/></svg></div>
+          <h3>Barcelona Leaf Tote</h3>
+          <p class="desc">Heavy canvas tote, holds a lot more than it looks.</p>
+          <div class="card-bottom"><span class="price">€10</span><button class="add-btn" data-name="Barcelona Leaf Tote" data-price="10">Add</button></div>
+        </article>
+        <article class="card" data-cat="merch" style="--accent: var(--violet);">
+          <div class="icon-wrap"><svg><use href="#ic-star"/></svg></div>
+          <h3>Sticker Pack Vol. 1</h3>
+          <p class="desc">Six vinyl stickers, waterproof, questionable puns.</p>
+          <div class="card-bottom"><span class="price">€5</span><button class="add-btn" data-name="Sticker Pack Vol. 1" data-price="5">Add</button></div>
+        </article>
+        <article class="card" data-cat="merch" style="--accent: var(--violet);">
+          <div class="icon-wrap"><svg><use href="#ic-cap"/></svg></div>
+          <h3>Raval Snapback</h3>
+          <p class="desc">Embroidered cap, one size, adjustable strap.</p>
+          <div class="card-bottom"><span class="price">€18</span><button class="add-btn" data-name="Raval Snapback" data-price="18">Add</button></div>
+        </article>
+
+        <!-- CBD -->
+        <article class="card" data-cat="cbd" style="--accent: var(--teal);">
+          <div class="icon-wrap"><svg><use href="#ic-jar"/></svg></div>
+          <h3>CBD Balm 250mg</h3>
+          <p class="desc">Topical hemp balm for tired muscles, non-psychoactive.</p>
+          <div class="card-bottom"><span class="price">€16</span><button class="add-btn" data-name="CBD Balm 250mg" data-price="16">Add</button></div>
+        </article>
+        <article class="card" data-cat="cbd" style="--accent: var(--teal);">
+          <div class="icon-wrap"><svg><use href="#ic-tea"/></svg></div>
+          <h3>Hemp Herbal Tea</h3>
+          <p class="desc">Relaxation blend with hemp leaf, chamomile, and mint.</p>
+          <div class="card-bottom"><span class="price">€7</span><button class="add-btn" data-name="Hemp Herbal Tea" data-price="7">Add</button></div>
+        </article>
+        <article class="card" data-cat="cbd" style="--accent: var(--teal);">
+          <span class="tag" style="--accent: var(--teal);">New</span>
+          <div class="icon-wrap"><svg><use href="#ic-drop"/></svg></div>
+          <h3>CBD Oil Drops 5%</h3>
+          <p class="desc">Legal hemp extract, under 0.2% THC, lab tested.</p>
+          <div class="card-bottom"><span class="price">€24</span><button class="add-btn" data-name="CBD Oil Drops 5%" data-price="24">Add</button></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISIT ============ -->
+  <section id="visit">
+    <div class="wrap visit-grid">
+      <div>
+        <div class="section-head">
+          <h2>Come find us</h2>
+          <p>Tucked into El Raval, a five-minute walk from La Rambla — look for the mural, not a sign.</p>
+        </div>
+        <ul class="info-list">
+          <li>
+            <svg class="ii" aria-hidden="true"><use href="#ic-pin"/></svg>
+            <div><strong>Carrer de la Cera 24, El Raval</strong><span>08001 Barcelona, Spain</span></div>
+          </li>
+          <li>
+            <svg class="ii" aria-hidden="true"><use href="#ic-clock"/></svg>
+            <div><strong>Mon–Sat, 11:00–21:00</strong><span>Sundays 12:00–18:00, we like sleeping in too</span></div>
+          </li>
+          <li>
+            <svg class="ii" aria-hidden="true"><use href="#ic-ig"/></svg>
+            <div><strong>@cannabis.bcn</strong><span>DM us before you come if you want something set aside</span></div>
+          </li>
+        </ul>
+        <a href="#" class="btn btn-solid">Message us on Instagram</a>
+      </div>
+      <div class="map-frame">
+        <iframe
+          title="Map showing El Raval, Barcelona"
+          src="https://www.google.com/maps?q=Carrer+de+la+Cera,+El+Raval,+Barcelona&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">CANNABIS.<span>BARCELONA · EST. LOCAL</span></a>
+        <p>An independent smoke shop in El Raval. Vapes, tools, papers, and souvenirs, picked by the people who sell them.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>SHOP</h4>
+          <ul>
+            <li><a href="#shop">Vapes & devices</a></li>
+            <li><a href="#shop">Tools</a></li>
+            <li><a href="#shop">Papers & basics</a></li>
+            <li><a href="#shop">CBD & wellness</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>SHOP INFO</h4>
+          <ul>
+            <li><a href="#manifesto">Manifesto</a></li>
+            <li><a href="#visit">Visit us</a></li>
+            <li><a href="#">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-box">
+      <strong>18+ only.</strong> This website and our shop are intended for adults of legal age only. Valid ID is required for purchase, no exceptions. We sell legal smoking accessories, vaporizer devices, and hemp-derived CBD products (under 0.2% THC) in line with Spanish law — we do not sell cannabis flower or any controlled substance, in store or online. Nicotine products, where sold, contain an addictive chemical. This is a sample website built as a design demo; product listings, address, and prices are illustrative and not a real storefront.
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Cannabis Barcelona. We didn't trademark it either.</span>
+      <span>Built with zero corporate input.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Age gate ----------
+  var gate = document.getElementById('age-gate');
+  var yesBtn = document.getElementById('gate-yes');
+  var noBtn = document.getElementById('gate-no');
+  var yesContent = document.querySelector('.gate-yes-content');
+  var byeContent = document.querySelector('.gate-bye');
+
+  yesBtn.addEventListener('click', function(){
+    gate.classList.add('hidden');
+    document.body.classList.remove('gate-open');
+  });
+  noBtn.addEventListener('click', function(){
+    yesContent.classList.add('hide');
+    byeContent.classList.add('show');
+  });
+
+  // ---------- Mobile nav ----------
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = document.getElementById('nav-links');
+  navToggle.addEventListener('click', function(){
+    var isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---------- Marquee (built + duplicated in JS for a seamless loop) ----------
+  var items = [
+    '18+ ONLY', 'LOCALLY OWNED', 'NO CORPORATE BS', 'FREE STICKER WITH EVERY ORDER',
+    'BARCELONA BORN', 'INDEPENDENT SINCE DAY ONE'
+  ];
+  var track = document.getElementById('marquee-track');
+  var html = '';
+  for (var r = 0; r < 2; r++){
+    items.forEach(function(text){
+      html += '<span class="marquee-item">' + text + ' <svg width="14" height="14" aria-hidden="true"><use href="#ic-leaf"/></svg></span>';
+    });
+  }
+  track.innerHTML = html;
+
+  // ---------- Category filter ----------
+  var chips = document.querySelectorAll('.chip');
+  var cards = document.querySelectorAll('.card');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.setAttribute('aria-pressed', 'false'); });
+      chip.setAttribute('aria-pressed', 'true');
+      var filter = chip.getAttribute('data-filter');
+      cards.forEach(function(card){
+        var show = (filter === 'all' || card.getAttribute('data-cat') === filter);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  // ---------- Cart (in-memory only, just for show) ----------
+  var cartCount = 0;
+  var cartCountEl = document.getElementById('cart-count');
+  document.querySelectorAll('.add-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      cartCount += 1;
+      cartCountEl.textContent = cartCount;
+      var original = btn.textContent;
+      btn.textContent = 'Added';
+      setTimeout(function(){ btn.textContent = original; }, 900);
+    });
+  });
+</script>
+</body>
+</html>
