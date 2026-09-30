@@ -222,13 +222,12 @@
   /* ---------- Scrolling notice tape (caution-tape style) ---------- */
   .tape-bar{
     width:100%;overflow:hidden;
-    background:repeating-linear-gradient(
-      -45deg,
-      #F5C518 0 22px,
-      #17140F 22px 44px
-    );
-    border-bottom:2px solid #17140F;
-    padding:9px 0;
+    /* solid ink band for the text (stays legible), caution stripes only on the thin top/bottom edges */
+    background:
+      repeating-linear-gradient(-45deg,#F5C518 0 10px,#17140F 10px 20px) top/100% 6px no-repeat,
+      repeating-linear-gradient(-45deg,#F5C518 0 10px,#17140F 10px 20px) bottom/100% 6px no-repeat,
+      #17140F;
+    padding:13px 0;
   }
   .tape-track{
     display:flex;
@@ -243,12 +242,11 @@
   .tape-item{
     display:inline-flex;align-items:center;
     padding:0 28px;
-    font-family:'Space Grotesk';font-weight:700;font-size:13px;
-    letter-spacing:.02em;
-    color:#17140F;
-    text-shadow:0 1px 0 rgba(255,255,255,.25);
+    font-family:'Space Grotesk';font-weight:700;font-size:14px;
+    letter-spacing:.03em;
+    color:#F5C518; /* safety yellow on ink: ~11:1 contrast */
   }
-  .tape-item::after{content:"⚠";margin-inline-start:28px;opacity:.7;}
+  .tape-item::after{content:"⚠";margin-inline-start:28px;color:#F5C518;}
   @media(prefers-reduced-motion:reduce){
     .tape-track{animation:none;}
   }
@@ -547,7 +545,7 @@
   }
 
   .delivery-modal-overlay{
-    position:fixed;inset:0;z-index:60;
+    position:fixed;inset:0;z-index:2000;
     background:var(--scrim);
     display:flex;align-items:center;justify-content:center;
     padding:20px;
@@ -610,6 +608,7 @@
   #map{
     width:100%;height:280px;border-radius:var(--radius);border:1px solid var(--border);
     background:var(--border);
+    position:relative;z-index:0;isolation:isolate; /* keep Leaflet's internal z-indexes (400-1000) below the delivery popup */
   }
   @media(min-width:800px){ #map{height:100%;min-height:320px;} }
   .leaflet-popup-content-wrapper{background:var(--surface);color:var(--text);border-radius:var(--radius);}
@@ -1719,6 +1718,39 @@
     return "https://api.whatsapp.com/send?phone=" + WHATSAPP_NUMBER + "&text=" + encodeURIComponent(message);
   }
 
+  // This is a universal https link, so the device itself picks the handler:
+  // WhatsApp, WhatsApp Business (Android shows a chooser if both are installed),
+  // the desktop app, or WhatsApp Web. We never force a specific app scheme.
+  const WA_LINK_PREFIX = "https://api.whatsapp.com/send";
+
+  function isMobileDevice(){
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+           (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS
+  }
+
+  function openWhatsApp(url){
+    if(isMobileDevice()){
+      // Same-tab navigation gives the OS the best chance to hand the link to the
+      // installed WhatsApp / WhatsApp Business app (a script-opened tab often can't).
+      window.location.href = url;
+    } else {
+      // Desktop: a real anchor click is not caught by popup blockers. WhatsApp's page
+      // then offers the desktop app or WhatsApp Web.
+      const a = document.createElement("a");
+      a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+  }
+
+  // Make every WhatsApp button on the page (FAB, product cards, "ask us") behave the same way.
+  document.addEventListener("click", (e)=>{
+    const a = e.target.closest && e.target.closest('a[href^="' + WA_LINK_PREFIX + '"]');
+    if(!a || !isMobileDevice()) return;
+    if(e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    openWhatsApp(a.href);
+  });
+
   const LOCATIONS = [
     {short:"Gràcia · Travessera", address:"Travessera de Gràcia, 209, 08012 Barcelona", lat:41.4031517, lng:2.1606065,
      hours:{type:"split", range1:"11:00–22:30", range2:"11:00–23:00"}},
@@ -2178,9 +2210,9 @@
     const address = document.getElementById("deliveryWhereInput").value.trim();
     if(!item || !address) return;
     const msg = UI[currentLang].deliveryWhatsappTemplate
-      .replace("{item}", item)
-      .replace("{address}", address);
-    window.open(buildWhatsAppLink(msg), "_blank", "noopener,noreferrer");
+      .replace("{item}", ()=>item)
+      .replace("{address}", ()=>address);
+    openWhatsApp(buildWhatsAppLink(msg));
     deliveryModal.classList.add("hidden-view");
     document.getElementById("deliveryWhatInput").value = "";
     document.getElementById("deliveryWhereInput").value = "";
