@@ -585,6 +585,30 @@
     padding:12px;cursor:pointer;
   }
 
+  /* ---------- WhatsApp app picker (phones) ---------- */
+  .wa-chooser-overlay{
+    position:fixed;inset:0;z-index:2100;
+    background:var(--scrim);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .wa-chooser-card{
+    position:relative;
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    max-width:360px;width:100%;
+    padding:26px 24px 18px;
+  }
+  .wa-choice{
+    display:block;width:100%;border-radius:999px;
+    font-family:inherit;font-size:14px;font-weight:600;
+    padding:13px;margin:0 0 10px;cursor:pointer;
+    border:1px solid transparent;
+  }
+  .wa-choice:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
+  .wa-choice-regular{background:#25D366;color:#062A16;}   /* WhatsApp green, dark text = ~8:1 */
+  .wa-choice-business{background:#0E7C6B;color:#fff;}     /* deeper teal so it reads as a different app, white text = ~5:1 */
+  .wa-choice-web{background:transparent;color:var(--text);border-color:var(--border);}
+
   /* ---------- Locations + map ---------- */
   .locations-section{max-width:var(--maxw);margin:30px auto 0;padding:0 20px;}
   .locations-section h2{
@@ -826,6 +850,19 @@
     </div>
   </div>
 
+  <!-- ================= WHATSAPP APP PICKER (phones) ================= -->
+  <div class="wa-chooser-overlay hidden-view" id="waChooser" role="dialog" aria-modal="true" aria-labelledby="waChooserTitle">
+    <div class="wa-chooser-card">
+      <button type="button" class="delivery-close" id="waChooserClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <p class="delivery-modal-title" id="waChooserTitle">Open chat with</p>
+      <button type="button" class="wa-choice wa-choice-regular" data-kind="regular">WhatsApp</button>
+      <button type="button" class="wa-choice wa-choice-business" data-kind="business">WhatsApp Business</button>
+      <button type="button" class="wa-choice wa-choice-web" data-kind="web">WhatsApp Web</button>
+    </div>
+  </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
   /* =====================================================
@@ -861,6 +898,7 @@
       deliveryWhere:"Where should we bring it?",
       deliveryWherePlaceholder:"Your address",
       deliverySubmit:"Send on WhatsApp",
+      waChooseTitle:"Open chat with",
       deliveryWhatsappTemplate:"Hi! I'd like a delivery — Item: {item} / Address: {address}",
       whatsappProductTemplate:"Hi! I'm interested in the {product} from CannaBarna — could you tell me the price and availability?",
       whatsappGeneral:"Hi! I'm looking for a product I didn't see listed on your site — do you have it in stock?",
@@ -916,6 +954,7 @@
       deliveryWhere:"¿A qué dirección lo llevamos?",
       deliveryWherePlaceholder:"Tu dirección",
       deliverySubmit:"Enviar por WhatsApp",
+      waChooseTitle:"Abrir el chat con",
       deliveryWhatsappTemplate:"¡Hola! Quisiera pedir un reparto a domicilio — Producto: {item} / Dirección: {address}",
       whatsappProductTemplate:"¡Hola! Me interesa {product} de CannaBarna — ¿podéis decirme el precio y la disponibilidad?",
       whatsappGeneral:"¡Hola! Busco un producto que no veo listado en la web — ¿lo tenéis en stock?",
@@ -971,6 +1010,7 @@
       deliveryWhere:"A quina adreça ho portem?",
       deliveryWherePlaceholder:"La teva adreça",
       deliverySubmit:"Enviar per WhatsApp",
+      waChooseTitle:"Obre el xat amb",
       deliveryWhatsappTemplate:"Hola! Voldria un repartiment a domicili — Producte: {item} / Adreça: {address}",
       whatsappProductTemplate:"Hola! Estic interessat en {product} de CannaBarna — em podeu dir el preu i la disponibilitat?",
       whatsappGeneral:"Hola! Busco un producte que no veig llistat al lloc web — el teniu en estoc?",
@@ -1026,6 +1066,7 @@
       deliveryWhere:"À quelle adresse ?",
       deliveryWherePlaceholder:"Votre adresse",
       deliverySubmit:"Envoyer sur WhatsApp",
+      waChooseTitle:"Ouvrir la discussion avec",
       deliveryWhatsappTemplate:"Bonjour ! Je souhaite une livraison — Article : {item} / Adresse : {address}",
       whatsappProductTemplate:"Bonjour ! Je suis intéressé par {product} de CannaBarna — pouvez-vous me dire le prix et la disponibilité ?",
       whatsappGeneral:"Bonjour ! Je cherche un produit qui n'est pas listé sur votre site — l'avez-vous en stock ?",
@@ -1081,6 +1122,7 @@
       deliveryWhere:"Wohin sollen wir liefern?",
       deliveryWherePlaceholder:"Deine Adresse",
       deliverySubmit:"Auf WhatsApp senden",
+      waChooseTitle:"Chat öffnen mit",
       deliveryWhatsappTemplate:"Hallo! Ich hätte gerne eine Lieferung — Artikel: {item} / Adresse: {address}",
       whatsappProductTemplate:"Hallo! Ich interessiere mich für {product} von CannaBarna — könnt ihr mir Preis und Verfügbarkeit nennen?",
       whatsappGeneral:"Hallo! Ich suche ein Produkt, das ich auf eurer Seite nicht gefunden habe — habt ihr das vorrätig?",
@@ -1136,6 +1178,7 @@
       deliveryWhere:"Dove consegniamo?",
       deliveryWherePlaceholder:"Il tuo indirizzo",
       deliverySubmit:"Invia su WhatsApp",
+      waChooseTitle:"Apri la chat con",
       deliveryWhatsappTemplate:"Ciao! Vorrei una consegna a domicilio — Articolo: {item} / Indirizzo: {address}",
       whatsappProductTemplate:"Ciao! Sono interessato a {product} di CannaBarna — potete dirmi prezzo e disponibilità?",
       whatsappGeneral:"Ciao! Cerco un prodotto che non ho trovato sul sito — lo avete disponibile?",
@@ -1191,6 +1234,7 @@
       deliveryWhere:"Para que morada entregamos?",
       deliveryWherePlaceholder:"A tua morada",
       deliverySubmit:"Enviar no WhatsApp",
+      waChooseTitle:"Abrir a conversa com",
       deliveryWhatsappTemplate:"Olá! Gostaria de uma entrega ao domicílio — Produto: {item} / Morada: {address}",
       whatsappProductTemplate:"Olá! Tenho interesse em {product} da CannaBarna — podem dizer-me o preço e a disponibilidade?",
       whatsappGeneral:"Olá! Procuro um produto que não vi listado no site — têm em stock?",
@@ -1246,6 +1290,7 @@
       deliveryWhere:"送到哪里?",
       deliveryWherePlaceholder:"您的地址",
       deliverySubmit:"通过WhatsApp发送",
+      waChooseTitle:"用以下方式打开聊天",
       deliveryWhatsappTemplate:"您好!我想申请送货上门 — 商品:{item} / 地址:{address}",
       whatsappProductTemplate:"您好!我对CannaBarna的{product}很感兴趣 — 能告诉我价格和库存情况吗?",
       whatsappGeneral:"您好!我在找一款网站上没有列出的产品 — 请问有货吗?",
@@ -1301,6 +1346,7 @@
       deliveryWhere:"إلى أين نوصّل؟",
       deliveryWherePlaceholder:"عنوانك",
       deliverySubmit:"إرسال عبر واتساب",
+      waChooseTitle:"فتح المحادثة عبر",
       deliveryWhatsappTemplate:"مرحبًا! أرغب في طلب توصيل — المنتج: {item} / العنوان: {address}",
       whatsappProductTemplate:"مرحبًا! أنا مهتم بـ {product} من CannaBarna — هل يمكنكم إخباري بالسعر والتوفر؟",
       whatsappGeneral:"مرحبًا! أبحث عن منتج لم أجده مدرجًا في موقعكم — هل هو متوفر لديكم؟",
@@ -1356,6 +1402,7 @@
       deliveryWhere:"Куда доставить?",
       deliveryWherePlaceholder:"Ваш адрес",
       deliverySubmit:"Отправить в WhatsApp",
+      waChooseTitle:"Открыть чат в",
       deliveryWhatsappTemplate:"Здравствуйте! Хочу заказать доставку — Товар: {item} / Адрес: {address}",
       whatsappProductTemplate:"Здравствуйте! Меня интересует {product} от CannaBarna — подскажите цену и наличие?",
       whatsappGeneral:"Здравствуйте! Ищу товар, которого нет на сайте — есть ли он у вас в наличии?",
@@ -1411,6 +1458,7 @@
       deliveryWhere:"Waar mogen we het bezorgen?",
       deliveryWherePlaceholder:"Je adres",
       deliverySubmit:"Versturen via WhatsApp",
+      waChooseTitle:"Chat openen met",
       deliveryWhatsappTemplate:"Hoi! Ik wil graag iets laten bezorgen — Product: {item} / Adres: {address}",
       whatsappProductTemplate:"Hoi! Ik ben geïnteresseerd in de {product} van CannaBarna — kunnen jullie me de prijs en beschikbaarheid laten weten?",
       whatsappGeneral:"Hoi! Ik zoek een product dat ik niet op jullie site zie staan — hebben jullie dat op voorraad?",
@@ -1466,6 +1514,7 @@
       deliveryWhere:"配達先はどちらですか?",
       deliveryWherePlaceholder:"ご住所",
       deliverySubmit:"WhatsAppで送信",
+      waChooseTitle:"チャットを開く",
       deliveryWhatsappTemplate:"こんにちは!配達をお願いしたいです — 商品:{item} / 住所:{address}",
       whatsappProductTemplate:"こんにちは!CannaBarnaの{product}に興味があります — 価格と在庫状況を教えていただけますか?",
       whatsappGeneral:"こんにちは!サイトに掲載されていない商品を探しています — 在庫はありますか?",
@@ -1521,6 +1570,7 @@
       deliveryWhere:"کہاں ڈیلیور کریں؟",
       deliveryWherePlaceholder:"آپ کا پتہ",
       deliverySubmit:"واٹس ایپ پر بھیجیں",
+      waChooseTitle:"چیٹ کھولیں بذریعہ",
       deliveryWhatsappTemplate:"ہیلو! مجھے ڈیلیوری چاہیے — چیز: {item} / پتہ: {address}",
       whatsappProductTemplate:"ہیلو! مجھے CannaBarna کے {product} میں دلچسپی ہے — کیا آپ مجھے قیمت اور دستیابی بتا سکتے ہیں؟",
       whatsappGeneral:"ہیلو! میں ایک ایسی مصنوعات تلاش کر رہا ہوں جو آپ کی سائٹ پر درج نہیں ہے — کیا یہ آپ کے پاس دستیاب ہے؟",
@@ -1728,19 +1778,67 @@
            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1); // iPadOS
   }
 
+  const IS_ANDROID = /Android/i.test(navigator.userAgent);
+
   function openWhatsApp(url){
     if(isMobileDevice()){
-      // Same-tab navigation gives the OS the best chance to hand the link to the
-      // installed WhatsApp / WhatsApp Business app (a script-opened tab often can't).
-      window.location.href = url;
+      // A web page cannot tell whether the visitor has WhatsApp, WhatsApp Business or both,
+      // so on phones let them pick. Each choice targets that specific app.
+      showWaChooser(url);
     } else {
       // Desktop: a real anchor click is not caught by popup blockers. WhatsApp's page
       // then offers the desktop app or WhatsApp Web.
-      const a = document.createElement("a");
-      a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
-      document.body.appendChild(a); a.click(); a.remove();
+      openInNewTab(url);
     }
   }
+
+  function openInNewTab(url){
+    const a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer";
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  // Build a link that targets one specific WhatsApp app.
+  function waAppLink(kind, url){
+    let text = "";
+    try{ text = new URL(url).searchParams.get("text") || ""; }catch(e){}
+    const q = "phone=" + WHATSAPP_NUMBER + "&text=" + encodeURIComponent(text);
+    if(IS_ANDROID){
+      // Android intent link pinned to the app's package. If that app is missing,
+      // Chrome falls back to the normal universal link.
+      const pkg = kind === "business" ? "com.whatsapp.w4b" : "com.whatsapp";
+      return "intent://send?" + q + "#Intent;scheme=whatsapp;package=" + pkg +
+             ";S.browser_fallback_url=" + encodeURIComponent(url) + ";end";
+    }
+    // iOS: WhatsApp Business has its own URL scheme; the regular app uses the universal link.
+    return kind === "business" ? "whatsapp-business://send?" + q : url;
+  }
+
+  let waPendingUrl = "";
+  const waChooser = document.getElementById("waChooser");
+  function showWaChooser(url){ waPendingUrl = url; waChooser.classList.remove("hidden-view"); }
+  function hideWaChooser(){ waChooser.classList.add("hidden-view"); }
+
+  waChooser.addEventListener("click", (e)=>{
+    if(e.target === waChooser){ hideWaChooser(); return; }
+    const btn = e.target.closest(".wa-choice");
+    if(!btn) return;
+    const kind = btn.dataset.kind, url = waPendingUrl;
+    hideWaChooser();
+    if(kind === "web"){ openInNewTab(url); return; }
+    const target = waAppLink(kind, url);
+    if(!IS_ANDROID && kind === "business"){
+      // iOS gives no error if the Business app is missing, so if this page is still
+      // in front after a moment, fall back to the universal link (which offers web/download).
+      const timer = setTimeout(()=>{ if(!document.hidden) window.location.href = url; }, 1800);
+      const cancel = ()=>clearTimeout(timer);
+      document.addEventListener("visibilitychange", cancel, {once:true});
+      window.addEventListener("pagehide", cancel, {once:true});
+    }
+    window.location.href = target;
+  });
+  document.getElementById("waChooserClose").addEventListener("click", hideWaChooser);
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") hideWaChooser(); });
 
   // Make every WhatsApp button on the page (FAB, product cards, "ask us") behave the same way.
   document.addEventListener("click", (e)=>{
@@ -2123,6 +2221,7 @@
     document.getElementById("deliveryWhereLabel").textContent = t.deliveryWhere;
     document.getElementById("deliveryWhereInput").placeholder = t.deliveryWherePlaceholder;
     document.getElementById("deliverySubmitBtn").textContent = t.deliverySubmit;
+    document.getElementById("waChooserTitle").textContent = t.waChooseTitle || "Open chat with";
 
     const themeIsDark = document.documentElement.getAttribute("data-theme") === "dark";
     document.getElementById("themeLabel").textContent = themeIsDark ? t.themeToLight : t.themeToDark;
